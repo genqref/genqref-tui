@@ -6,7 +6,8 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [hawk "0.2.11"]
                  [cheshire "5.11.0"]
-                 [clojure-lanterna "0.9.7"]]
+                 [clojure-lanterna "0.9.7"]
+                 [tick "0.6.2"]]
   :main ^:skip-aot genqref-tui.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
