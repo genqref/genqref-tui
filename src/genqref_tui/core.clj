@@ -63,16 +63,17 @@
   (s/put-string scr 0 0 (str (t/now)
                              " Token-key: " (str/join "/" (:token-key new))
                              " Phase: " (:phase new)
-                             " Credits: " (-> new :agent :credits)))
+                             " Credits: " (-> new :agent :credits)
+                             " Budget: " (apply + (-> new :budget vals))))
   (s/put-string scr 0 1 (str "Contracts: " (->> new :contracts vals (filter (comp not :accepted)) count)
                              "/" (->> new :contracts vals (filter #(and (:accepted %) (not (:fulfilled %)))) count)
                              "/" (->> new :contracts vals (filter #(and (:accepted %) (:fulfilled %))) count)
                              " Waypoints: " (-> new :waypoints count)
                              " Markets: " (-> new :markets count)
                              " Shipyards: " (-> new :shipyards count)
-                             " Surveys: " (->> new :surveys vals (apply concat) count)))
+                             " Surveys: " (->> new :surveys vals (apply concat) count)
+                             " Transactions: " (->> new :transactions count)))
   (s/put-string scr 0 2 (str "Ships: " (-> new :ships count)
-                             "/" (->> new :ships vals (filter active?) count)
                              "/" (->> new :ships vals (filter cooldown?) count)
                              "/" (->> new :ships vals (filter arrival?) count)))
   (let [[x y] (map dec (s/get-size scr))
@@ -85,10 +86,13 @@
                       (* column (/ x (count groups))) ;; x
                       (+ (- index (* column lines)) 4) ;; y
                       (format
-                       "%-10s %-13s %5s"
+                       "%-10s %-10s %4s %4s"
                        (:symbol ship)
                        (:assignment ship)
-                       (wait-time ship))
+                       (arrival ship)
+                       (cooldown ship)
+                       ;;(wait-time ship)
+                       )
                       {:fg (ship-color ship)})))
     (s/move-cursor scr 2 y)
     (s/put-string scr 0 y (str (:page local) "/" (:pages local) " > " (-> new :local :key))))
