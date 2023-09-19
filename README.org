@@ -1,5 +1,5 @@
 * GENQREF TUI
 
-The terminal user interface for seasoned Space Trader
+A terminal user interface for the seasoned Space Trader
 
 [[./screenshot.png]]
