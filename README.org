@@ -2,4 +2,4 @@
 
 The terminal user interface for seasoned Space Trader
 
-file:./screenshot.png
+[[./screenshot.png]]
